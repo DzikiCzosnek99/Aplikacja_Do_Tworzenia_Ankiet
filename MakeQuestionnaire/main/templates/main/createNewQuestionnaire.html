@@ -1,0 +1,10 @@
+{% extends 'base.html'  %}
+{% block content %}
+    <div>
+        <form method="post" action="{% url 'createNewQuestionnaire' %}">
+            {% csrf_token %}
+            <p>Nazwa ankiety: {{form.text}}</p>
+            <button type="submit">Dodaj ankiete</button>
+        </form>
+    </div>
+{% endblock %}

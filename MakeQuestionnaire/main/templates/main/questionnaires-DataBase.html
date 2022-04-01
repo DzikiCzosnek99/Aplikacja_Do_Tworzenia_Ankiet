@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <ul>
+        {% for questionnaire in questionnaires %}
+            {% if questionnaire.public == True %}
+            <li><a href="{% url 'questionnaireProfile' questionnaire.id %}">{{questionnaire.text}}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

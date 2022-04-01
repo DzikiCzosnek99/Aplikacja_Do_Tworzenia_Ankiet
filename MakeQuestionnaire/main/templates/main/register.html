@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="post" action="">
+        {% csrf_token %}
+        <p>Nazwa użytkownika {{form.username}}</p>
+        <p>Hasło {{form.password1}}</p>
+        <p>Powtórz hasło {{form.password2}}</p>
+        <button type="submit">Zarejestruj</button>
+        <a href="{% url 'login' %}">Zaloguj</a>
+        <p>{{message}}</p>
+    </form>
+{% endblock %}

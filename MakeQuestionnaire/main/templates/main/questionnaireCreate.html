@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>{{questionnaire.text}}</p>
+    <uL>
+        {% for question in questionnaire.questions.all %}
+            <li>
+                <p>{{question.text}}</p> <a href="{% url 'deleteQuestion' question.id questionnaire.id %}">Usuń</a>
+                <a href="{% url 'editQuestion' question.id questionnaire.id %}">Edytuj</a>
+            </li>
+            <ul>
+                {% for answer in question.answers.all %}
+                    <li>
+                        {{answer.text}}<a href="{% url 'deleteAnswer' answer.id questionnaire.id %}">Usuń</a>
+                        <a href="{% url 'editAnswer' answer.id questionnaire.id %}">Edytuj</a>
+                    </li>
+                {% endfor %}
+                <li>
+                    <form method="post" action="{% url 'addAnswer' question.id questionnaire.id  %}">
+                        {% csrf_token %}
+                        {{answerForm.text}}
+                        <button type="submit" name="addAnswer">Dodaj odpowiedz</button>
+                    </form>
+                </li>
+            </ul>
+        {% endfor %}
+        <li>
+            <form method="post" action="">
+                {% csrf_token %}
+                {{questionForm.text}}
+                Wielokrotny wybór: {{questionForm.multiple_choice}}
+                <button type="submit" name="addQuestion">Dodaj pytanie</button>
+            </form>
+        </li>
+    </uL>
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit" name="save">Opublikuj ankiete</button>
+    </form>
+{% endblock %}

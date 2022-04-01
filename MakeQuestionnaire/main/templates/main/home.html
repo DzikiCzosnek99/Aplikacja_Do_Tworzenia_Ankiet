@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    <a href="{% url 'questionnaire_DataBase' %}">Baza ankiet</a>
+    <a href="{% url 'createNewQuestionnaire' %}">Stwórz nową ankiete</a>
+    <a href="{% url 'myQuestionnaires' %}">Moje Ankiety</a>
+    <a href="{% url 'login' %}">Zaloguj</a>
+
+{% endblock %}

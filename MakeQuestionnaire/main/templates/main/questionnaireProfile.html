@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    {{questionnaire.text}}
+    <form method="post" action="">
+        {% csrf_token %}
+        <ul>
+            {% for question in questionnaire.questions.all %}
+                <li>
+                    {{question.text}}
+                   <ul>
+                       {% for answer in question.answers.all %}
+                            {% if question.multiple_choice == False %}
+                                <li>
+                                    <input type="radio" name="{{question.text}}" value="{{answer.text}}">
+                                    <label for="{{answer.text}}">{{answer.text}}</label>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <input type="checkbox" name="{{question.text}}" value="{{answer.text}}">
+                                    <label for="{{answer.text}}">{{answer.text}}</label>
+                                </li>
+                            {% endif %}
+                       {% endfor %}
+                   </ul>
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Zakończ quiz</button>
+    </form>
+{% endblock %}
