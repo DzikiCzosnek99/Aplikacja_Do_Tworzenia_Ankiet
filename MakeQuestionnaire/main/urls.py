@@ -16,5 +16,6 @@ urlpatterns = [
     path('myQuestionnaires', views.myQuestionnaires, name='myQuestionnaires'),
     path('login/', views.loginPage, name='login'),
     path('register/', views.register, name='register'),
-    path('questionnaire_Results/<str:id>', views.questionnaireResults, name='questionnaireResults')
+    path('questionnaire_Results/<str:id>', views.questionnaireResults, name='questionnaireResults'),
+    path('profile/<str:id>', views.profile, name='profile'),
     ]

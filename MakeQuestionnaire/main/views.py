@@ -189,7 +189,7 @@ def register(request):
 
 def questionnaireResults(request, id):
     questionnaire = Questionnaire.objects.get(id=id)
-    plots = []
+
     for question in questionnaire.questions.all():
         answers = []
         votes = []
@@ -197,8 +197,18 @@ def questionnaireResults(request, id):
             answers.append(answer.text)
             votes.append(answer.votes)
         plot = get_plot(answers, votes)
-        plots.append(plot)
+        question.plot = plot
+        question.save()
     questions = questionnaire.questions.all()
-    context = {'plots': plots, 'questions': questions, 'questionnaire': questionnaire}
+    context = {'questions': questions, 'questionnaire': questionnaire}
     return render(request, 'questionnaireResults.html', context)
 
+
+@notloged
+def profile(request, id):
+    if id != request.user.id:
+        return redirect('/home')
+    else:
+        userQuestionnaires = Questionnaire.objects.filter(owner=request.user)
+        context = {"userQuestionnaires": userQuestionnaires}
+        return render(request, "profile.html", context)

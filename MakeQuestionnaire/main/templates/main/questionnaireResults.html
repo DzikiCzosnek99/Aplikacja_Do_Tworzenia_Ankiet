@@ -2,8 +2,8 @@
 {% block content %}
    <p>{{questionnaire.text}}</p>
     {% for question in questions %}
-        <p>{{question.text}}</p>
         <p>{{forloop.counter0}}</p>
-        <img src="data:image/png;base64, {{plots.0|safe}}">
+        <p>{{question.text}}</p>
+        <img src="data:image/png;base64, {{question.plot|safe}}">
     {% endfor %}
 {% endblock %}
