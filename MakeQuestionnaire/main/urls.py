@@ -17,5 +17,5 @@ urlpatterns = [
     path('login/', views.loginPage, name='login'),
     path('register/', views.register, name='register'),
     path('questionnaire_Results/<str:id>', views.questionnaireResults, name='questionnaireResults'),
-    path('profile/<str:id>', views.profile, name='profile'),
+    path('profile/', views.profile, name='profile'),
     ]

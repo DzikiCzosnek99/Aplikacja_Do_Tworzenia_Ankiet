@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from .decorators import *
 from .utils import get_plot
 
@@ -205,10 +205,11 @@ def questionnaireResults(request, id):
 
 
 @notloged
-def profile(request, id):
-    if id != request.user.id:
+def profile(request):
+    if request.method == "POST":
+        logout(request)
         return redirect('/home')
     else:
         userQuestionnaires = Questionnaire.objects.filter(owner=request.user)
         context = {"userQuestionnaires": userQuestionnaires}
-        return render(request, "profile.html", context)
+    return render(request, "profile.html", context)

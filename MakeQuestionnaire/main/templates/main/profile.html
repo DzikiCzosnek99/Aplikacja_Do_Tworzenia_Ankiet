@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    PROFILE
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit">Wylogój</button>
+    </form>
+    {% for questionnaire in userQuestionnaires %}
+        <p>{{questionnaire.text}}</p>
+    {% endfor %}
 {% endblock %}
