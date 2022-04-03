@@ -18,32 +18,54 @@
     </script>
 </head>
 <body>
+<header>
     <nav class="navbar navbar-expand-lg navbar-light bg-success">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{ % url 'home' % }">Questionnaire APP</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">Questionnaire APP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="{ % url 'home' % }">Strona główna</a>
-        <a class="nav-link" href="{ % url 'questionnaire_DataBase' % }">Baza ankiet</a>
-      </div>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="{% url 'home' %}">Strona główna</a>
+                    <a class="nav-link" href="{% url 'questionnaire_DataBase' %}">Baza ankiet</a>
+                </div>
+            </div>
+            <div class="navbar-nav navbar-right" >
+                {% if request.user.is_authenticated %}
+                    <span class="navbar-text">
+                        Zalogowano jako {{request.user}}
+                    </span>
+                {% else %}
+                    <a class="nav-link" href="{% url 'login' %}">Zaloguj</a>
+                    <a class="nav-link" href="{% url 'register' %}">Zarejestruj</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="container-fluid " id="test">
+        <div class="row ">
+            <div class="col-lg-2 col-md-12">
+                <aside>
+
+                </aside>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <article>
+                        {% block content %}
+                        {% endblock %}
+                </article>
+            </div>
+            <div class="col-lg-2 col-md-12" >
+                <aside>
+
+                </aside>
+            </div>
+        </div>
     </div>
-    <div class="navbar-nav navbar-right" >
-        {% if request.user.is_authenticated %}
-            <span class="navbar-text">
-                Zalogowano jako {{request.user}}
-            </span>
-        {% else %}
-            <a class="nav-link" href="{% url 'login' %}">Zaloguj</a>
-            <a class="nav-link" href="{% url 'register' %}">Zarejestruj</a>
-        {% endif %}
-      </div>
-  </div>
-</nav>
-    {% block content %}
-    {% endblock %}
+</main>
 </body>
 </html>
