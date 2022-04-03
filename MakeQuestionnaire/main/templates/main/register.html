@@ -1,12 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form method="post" action="">
+<div class="container">
+        <form method="post" action="">
         {% csrf_token %}
-        <p>Nazwa użytkownika {{form.username}}</p>
-        <p>Hasło {{form.password1}}</p>
-        <p>Powtórz hasło {{form.password2}}</p>
-        <button type="submit">Zarejestruj</button>
-        <a href="{% url 'login' %}">Zaloguj</a>
-        <p>{{message}}</p>
-    </form>
+            <div class="mb-3 row">
+                <div class="col-4"></div>
+                <label for="id_username" class="col-sm-2 col-form-label" style="margin-top:20px;">Nazwa użytkownika</label>
+                <div class="col-sm-2 col-form-label" style="margin-top:20px;">{{form.username}}</div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-4"></div>
+                <label for="id_password1" class="col-sm-2 col-form-label" >Hasło</label>
+                <div class="col-sm-2 col-form-label" >{{form.password1}}</div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-4"></div>
+                <label for="id_password2" class="col-sm-2 col-form-label" >Powtórz hasło</label>
+                <div class="col-sm-2 col-form-label" >{{form.password2}}</div>
+            </div>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-2 text-center"><button class="btn btn-primary" type="submit">Zarejestuj</button></div>
+                <div class="col-2 text-center"><a href="{% url 'login' %}" class="btn btn-primary">Zaloguj</a></div>
+            </div>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4 text-center" style="margin-top:20px;"><p class="logerr">{{message}}</p></div>
+            </div>
+        </form>
+</div>
 {% endblock %}

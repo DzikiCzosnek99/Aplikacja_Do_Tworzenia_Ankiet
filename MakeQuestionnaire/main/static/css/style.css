@@ -23,3 +23,14 @@
     color:black;
     background-color:blueviolet;
 }
+
+.logerr{
+    color:red;
+}
+
+#id_username,
+#id_password1,
+#id_password2{
+    padding:10px;
+    margin-top:-10px;
+}

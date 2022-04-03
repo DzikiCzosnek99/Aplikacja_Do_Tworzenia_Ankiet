@@ -183,6 +183,7 @@ def register(request):
             user = User(username=username, password=password1)
             user.save()
             return redirect('/login')
+    print(message)
     context = {'form': form, 'message': message}
     return render(request, 'register.html', context)
 
