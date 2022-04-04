@@ -1,10 +1,27 @@
 {% extends 'base.html'  %}
 {% block content %}
-    <div>
-        <form method="post" action="{% url 'createNewQuestionnaire' %}">
-            {% csrf_token %}
-            <p>Nazwa ankiety: {{form.text}}</p>
-            <button type="submit">Dodaj ankiete</button>
-        </form>
-    </div>
+<div class="container">
+    <form method="post" action="">
+        {% csrf_token %}
+        <div class="mb-3 row">
+            <label for="id_text" class="col-4 col-form-label" style="margin-top:20px;">Nazwa ankiety</label>
+            {{form.text}}
+        </div>
+        <div class="mb-3 row">
+            <label for="id_password" class="col-4 col-form-label" style="margin-top:20px;">Hasło(nieobowązkowe)</label>
+            {{form.password}}
+        </div>
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="form-check">
+                    {{form.publicResults}}
+                    <label class="form-check-label" for="id_publicResults">Publiczne wyniki</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary">Dodaj ankiete</button>
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

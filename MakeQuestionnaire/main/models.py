@@ -29,6 +29,7 @@ class Questionnaire(models.Model):
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     public = models.BooleanField(null=True, default=False)
     publicResults = models.BooleanField(null=True, blank=True)
+    password = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.text

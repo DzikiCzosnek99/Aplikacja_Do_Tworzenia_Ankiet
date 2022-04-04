@@ -22,7 +22,15 @@ def createNewQuestionnaire(request):
         questionnaireForm = QuestionnaireForm(request.POST)
         if questionnaireForm.is_valid():
             text = request.POST.get('text')
-            questionnaire = Questionnaire(text=text, owner=request.user)
+            publicResults = request.POST.get('publicResults')
+            print(publicResults)
+            if publicResults == 'on':
+                publicResults = True
+            if publicResults is None:
+                publicResults = False
+            password = request.POST.get('password')
+            print(password)
+            questionnaire = Questionnaire(text=text, owner=request.user, publicResults=publicResults, password=password)
             questionnaire.save()
             return redirect(f"/questionnaireCreate/{questionnaire.id}")
     context = {'form': QuestionnaireForm}
