@@ -49,7 +49,7 @@ def questionnaireCreate(request, id):
                 multiple_choice = request.POST.get('multiple_choice')
                 if multiple_choice == 'on':
                     multiple_choice = True
-                else:
+                if multiple_choice is None:
                     multiple_choice = False
                 question = Question(text=text, multiple_choice=multiple_choice)
                 question.save()
@@ -191,7 +191,6 @@ def register(request):
             user = User(username=username, password=password1)
             user.save()
             return redirect('/login')
-    print(message)
     context = {'form': form, 'message': message}
     return render(request, 'register.html', context)
 

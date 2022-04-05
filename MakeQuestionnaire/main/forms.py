@@ -19,14 +19,22 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = ['text', 'multiple_choice']
-
-    multiple_choice = forms.BooleanField(widget=forms.CheckboxInput, required=False)
+        widgets = {
+            'text': forms.TextInput(attrs={
+                'class': 'col-10 col-form-label',
+                'style': 'background-color:#e6b3ff;border-bottom: 1px solid #000;'}),
+            'multiple_choice': forms.CheckboxInput(attrs={'class': 'form-check-input'})
+            }
 
 
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields = ['text']
+        widgets = {
+            'text': forms.TextInput(attrs={'class': 'col-10 col-form-label',
+                                           'style': 'background-color:#b3ffb3;border-bottom: 1px solid #000;'})
+        }
 
 
 class UserRegisterForm(UserCreationForm):

@@ -1,39 +1,70 @@
 {% extends 'base.html' %}
 {% block content %}
-    <p>{{questionnaire.text}}</p>
-    <uL>
-        {% for question in questionnaire.questions.all %}
-            <li>
-                <p>{{question.text}}</p> <a href="{% url 'deleteQuestion' question.id questionnaire.id %}">Usuń</a>
-                <a href="{% url 'editQuestion' question.id questionnaire.id %}">Edytuj</a>
-            </li>
-            <ul>
-                {% for answer in question.answers.all %}
-                    <li>
-                        {{answer.text}}<a href="{% url 'deleteAnswer' answer.id questionnaire.id %}">Usuń</a>
-                        <a href="{% url 'editAnswer' answer.id questionnaire.id %}">Edytuj</a>
-                    </li>
-                {% endfor %}
-                <li>
-                    <form method="post" action="{% url 'addAnswer' question.id questionnaire.id  %}">
-                        {% csrf_token %}
-                        {{answerForm.text}}
-                        <button type="submit" name="addAnswer">Dodaj odpowiedz</button>
-                    </form>
-                </li>
-            </ul>
-        {% endfor %}
-        <li>
-            <form method="post" action="">
-                {% csrf_token %}
-                {{questionForm.text}}
-                Wielokrotny wybór: {{questionForm.multiple_choice}}
-                <button type="submit" name="addQuestion">Dodaj pytanie</button>
-            </form>
-        </li>
-    </uL>
-    <form method="post" action="">
-        {% csrf_token %}
-        <button type="submit" name="save">Opublikuj ankiete</button>
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h1>{{questionnaire.text}}</h1>
+        </div>
+    </div>
+    {% for question in questionnaire.questions.all %}
+    <div class="row" style="background-color:#ff99ff;padding:5px;border-bottom: 1px solid #000;">
+        <div class="col-10">
+            <p>{{question.text}}</p>
+        </div>
+        <div class="col-1">
+            <a href="{% url 'deleteQuestion' question.id questionnaire.id %}" class="btn btn-danger">Usuń</a>
+        </div>
+        <div class="col-1">
+            <a href="{% url 'editQuestion' question.id questionnaire.id %}" class="btn btn-primary">Edytuj</a>
+        </div>
+    </div>
+    {% for answer in question.answers.all %}
+    <div class="row" style="background-color:#80ff80;padding:5px;border-bottom: 1px solid #000;;">
+        <div class="col-10">
+            <p>&#9900; {{answer.text}}</p>
+        </div>
+        <div class="col-1">
+            <a href="{% url 'deleteAnswer' answer.id questionnaire.id %}" class="btn btn-danger">Usuń</a>
+        </div>
+        <div class="col-1">
+            <a href="{% url 'editAnswer' answer.id questionnaire.id %}" class="btn btn-primary">Edytuj</a>
+        </div>
+    </div>
+    {% endfor %}
+    <form method="post" action="{% url 'addAnswer' question.id questionnaire.id  %}">
+        <div class="row" style="background-color:#80ff80;padding:5px;border-bottom: 1px solid #000;">
+            {% csrf_token %}
+            {{answerForm.text}}
+            <div class="col-2">
+                <button type="submit" name="addAnswer" class="btn btn-success">Dodaj odpowiedz</button>
+            </div>
+        </div>
     </form>
+    {% endfor %}
+
+    <form method="post" action="">
+        <div class="row" style="background-color:#ff99ff;padding:5px;">
+            {% csrf_token %}
+            {{questionForm.text}}
+            <div class="col-2">
+                 <button type="submit" name="addQuestion" class="btn btn-success">Dodaj pytanie</button>
+            </div>
+        </div>
+        <div class="row" style="background-color:#ff99ff;border-bottom: 1px solid #000;">
+            <div class="col-6">
+                {{questionForm.multiple_choice}}
+                <label class="form-check-label" for="id_multiple_choice">Wybór wielokrotny</label>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <form method="post" action="">
+        {% csrf_token %}
+             <div class="col-4">
+                 <button type="submit" name="save" class="btn btn-success">Opublikuj ankiete</button>
+             </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
