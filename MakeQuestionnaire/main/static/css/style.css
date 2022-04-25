@@ -41,3 +41,24 @@ main {
     padding:10px;
     margin-top:-10px;
 }
+
+.TextCreateNew{
+    font-size:20px;
+    font-weight:600;
+}
+.TextCreateNew2{
+    font-size:18px;
+    font-weight: 400;
+}
+.atr1 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.Qprofile{
+    text-decoration: none;
+    color: black;
+}
+.Qprofile :hover{
+    color:darkslategrey;
+}

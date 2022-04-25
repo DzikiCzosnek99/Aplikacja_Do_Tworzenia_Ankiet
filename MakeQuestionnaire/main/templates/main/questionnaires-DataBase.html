@@ -1,10 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
-    <ul>
-        {% for questionnaire in questionnaires %}
-            {% if questionnaire.public == True %}
-            <li><a href="{% url 'questionnaireProfile' questionnaire.id %}">{{questionnaire.text}}</a></li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+<div class="container">
+    <form method="get" action="">
+        <div class="row" style="margin-top: 15px;">
+                {% csrf_token %}
+                {{Myfilter.form.text}}
+                <div class="col-2">
+                    <button type="submit" class="btn btn-secondary">Szukaj</button>
+                </div>
+                <div class="col-4"></div>
+                <div class="col-2 text-right">
+                    <a href="{% url 'createNewQuestionnaire' %}" class="btn btn-success">Dodaj nową ankiete</a>
+                </div>
+        </div>
+
+        <div class="row" style="border-bottom: 1px solid #000; margin-top: 10px;"></div>
+    </form>
+    <div class="row">
+        <div class="col-6"><p class="atr1">Nazwa</p></div>
+        <div class="col-2"><p class="atr1">Hasło</p></div>
+        <div class="col-2"><p class="atr1">Twórca</p></div>
+        <div class="col-2"><p class="atr1">Data</p></div>
+    </div>
+    {% for questionnaire in questionnaires %}
+        {% if questionnaire.public == True %}
+            <div class="row">
+                <div class="col-6"><a class="Qprofile" href="{% url 'questionnaireProfile' questionnaire.id %}" >{{questionnaire.text}}</a></div>
+                <div class="col-2">
+                    {% if questionnaire.password != "" %}
+                        <p>Tak</p>
+                    {% else %}
+                        <p>Nie</p>
+                    {% endif %}
+                </div>
+                <div class="col-2"><p>{{questionnaire.owner}}</p></div>
+                <div class="col-2"><p>{{questionnaire.date}}</p></div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}

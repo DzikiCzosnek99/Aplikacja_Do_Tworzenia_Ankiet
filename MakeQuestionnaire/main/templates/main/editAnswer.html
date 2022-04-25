@@ -4,16 +4,10 @@
     <div class="row" style="margin-top:10px;"></div>
     <form action="" method="post">
     {% csrf_token %}
-        <div class="row" style="background-color:#ff99ff;padding:5px;">
+        <div class="row" style="background-color:#80ff80;padding:5px;border-bottom: 1px solid #000;">
             {{form.text}}
             <div class="col-2">
                 <button type="submit" class="btn btn-success btn-lg">Zapisz zmiany</button>
-            </div>
-        </div>
-        <div class="row" style="background-color:#ff99ff;border-bottom: 1px solid #000;">
-            <div class="col-6">
-                {{form.multiple_choice}}
-                <label class="form-check-label" for="id_multiple_choice">Wybór wielokrotny</label>
             </div>
         </div>
     </form>

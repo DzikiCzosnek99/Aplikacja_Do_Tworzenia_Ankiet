@@ -16,6 +16,24 @@ def get_graph():
 
 def get_plot(answers, votes):
     plt.switch_backend('AGG')
-    plt.barh(answers, votes)
+    fiq, ax = plt.subplots(figsize=(7, len(answers)))
+    ax.barh(answers, votes, 0.5)
+    for index, data in enumerate(votes):
+        if data != 0:
+            text = ''
+            if data == 1:
+                text = 'głos'
+            elif 1 < data <= 4:
+                text = 'głosy'
+            else:
+                text = 'głosów'
+            plt.text(x=data, y=index-0.04, s=f" {data} {text}")
+    ax.set_facecolor((0.85, 0.85, 0.85))
+    fiq.patch.set_facecolor((0.85, 0.85, 0.85))
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.get_xaxis().set_ticks([])
     graph = get_graph()
     return graph

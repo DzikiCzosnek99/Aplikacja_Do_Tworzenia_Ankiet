@@ -16,7 +16,7 @@ class Answer(models.Model):
 class Question(models.Model):
     text = models.CharField(max_length=500)
     answers = models.ManyToManyField(Answer, blank=True)
-    multiple_choice = models.BooleanField(null=True, default=False)
+    multiple_choice = models.BooleanField(default=False)
     plot = models.CharField(max_length=1500, blank=True, null=True)
 
     def __str__(self):
@@ -30,6 +30,7 @@ class Questionnaire(models.Model):
     public = models.BooleanField(null=True, default=False)
     publicResults = models.BooleanField(null=True, blank=True)
     password = models.CharField(max_length=200, blank=True, null=True)
+    date = models.DateField(auto_created=True, null=True)
 
     def __str__(self):
         return self.text

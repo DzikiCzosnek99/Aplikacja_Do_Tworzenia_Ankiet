@@ -1,30 +1,51 @@
 {% extends 'base.html' %}
+{% load main_tags %}
 {% block content %}
-    {{questionnaire.text}}
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>{{questionnaire.text}}</h1>
+        </div>
+    </div>
     <form method="post" action="">
         {% csrf_token %}
-        <ul>
-            {% for question in questionnaire.questions.all %}
-                <li>
-                    {{question.text}}
-                   <ul>
-                       {% for answer in question.answers.all %}
-                            {% if question.multiple_choice == False %}
-                                <li>
-                                    <input type="radio" name="{{question.text}}" value="{{answer.text}}">
-                                    <label for="{{answer.text}}">{{answer.text}}</label>
-                                </li>
-                            {% else %}
-                                <li>
-                                    <input type="checkbox" name="{{question.text}}" value="{{answer.text}}">
-                                    <label for="{{answer.text}}">{{answer.text}}</label>
-                                </li>
-                            {% endif %}
-                       {% endfor %}
-                   </ul>
-                </li>
+        {% for question in questionnaire.questions.all %}
+            <div class="row" style="border-bottom: 1px solid #000;margin-top: 20px;">
+                <div class="col-1"></div>
+                <div class="col-10">
+                    <p class="TextCreateNew">{{forloop.counter}}. {{question.text}}</p>
+                </div>
+            </div>
+            {% for answer in question.answers.all %}
+                {% if question.multiple_choice == False %}
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="form-check">
+                                <input class="form-check-input" name="{{question.text}}" type="radio" value="{{answer.text}}" style="font-size:18px;">
+                                <label class="form-check-label" for="{{answer.text}}" style="font-size:18px;">{{forloop.counter|to_char}}) {{answer.text}}</label>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="form-check">
+                                <input class="form-check-input" name="{{question.text}}" type="checkbox" value="{{answer.text}}" style="font-size:18px;">
+                                <label class="form-check-label" for="{{answer.text}}" style="font-size:18px;">{{forloop.counter|to_char}}) {{answer.text}}</label>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
-        </ul>
-        <button type="submit">Zakończ quiz</button>
+        {% endfor %}
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-1"></div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-success">Zakończ quiz</button>
+            </div>
+        </div>
     </form>
+</div>
 {% endblock %}

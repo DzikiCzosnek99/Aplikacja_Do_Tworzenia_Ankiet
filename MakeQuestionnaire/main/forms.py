@@ -9,8 +9,8 @@ class QuestionnaireForm(forms.ModelForm):
         model = Questionnaire
         fields = ['text', 'password', 'publicResults']
         widgets = {
-            'text': forms.TextInput(attrs={'class': 'col-6 col-form-label', 'style': 'margin-top:20px;'}),
-            'password': forms.PasswordInput(attrs={'class': 'col-6 col-form-label', 'style': 'margin-top:20px;'}),
+            'text': forms.TextInput(attrs={'class': 'col-xl-6 col-md-12 col-form-label', 'style': 'margin-top: 20px;'}),
+            'password': forms.PasswordInput(attrs={'class': 'col-xl-6 col-md-12 col-form-label', 'style': 'margin-top: 20px;'}),
             'publicResults': forms.CheckboxInput(attrs={'class': 'form-check-input'})
         }
 
@@ -21,8 +21,8 @@ class QuestionForm(forms.ModelForm):
         fields = ['text', 'multiple_choice']
         widgets = {
             'text': forms.TextInput(attrs={
-                'class': 'col-10 col-form-label',
-                'style': 'background-color:#e6b3ff;border-bottom: 1px solid #000;'}),
+                'class': 'col-10 col-form-label', 'placeholder': 'Dodaj nowe pytanie',
+                }),
             'multiple_choice': forms.CheckboxInput(attrs={'class': 'form-check-input'})
             }
 
@@ -32,9 +32,9 @@ class AnswerForm(forms.ModelForm):
         model = Answer
         fields = ['text']
         widgets = {
-            'text': forms.TextInput(attrs={'class': 'col-10 col-form-label',
-                                           'style': 'background-color:#b3ffb3;border-bottom: 1px solid #000;'})
-        }
+            'text': forms.TextInput(attrs={'class': 'col-10 col-form-label', 'placeholder': 'Dodaj odpowiedz'
+                                           })
+            }
 
 
 class UserRegisterForm(UserCreationForm):

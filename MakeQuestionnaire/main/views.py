@@ -4,6 +4,7 @@ from .models import *
 from django.contrib.auth import login, authenticate, logout
 from .decorators import *
 from .utils import get_plot
+from .filters import *
 
 
 # Create your views here.
@@ -80,7 +81,9 @@ def addAnswer(request, question_id, questionnaire_id):
 
 def questionnaire_DataBase(request):
     questionnaires = Questionnaire.objects.all()
-    context = {'questionnaires': questionnaires}
+    Myfilter = QuestionnairesFilter(request.GET, queryset=questionnaires)
+    questionnaires = Myfilter.qs
+    context = {'questionnaires': questionnaires, 'Myfilter': Myfilter}
     return render(request, 'questionnaires-DataBase.html', context)
 
 
@@ -145,7 +148,7 @@ def editAnswer(request, answer_id, questionnaire_id):
             form.save()
             return redirect(f"/questionnaireCreate/{questionnaire_id}")
     context = {'form': form}
-    return render(request, 'editQuestion.html', context)
+    return render(request, 'editAnswer.html', context)
 
 
 @notloged
@@ -199,11 +202,17 @@ def questionnaireResults(request, id):
     questionnaire = Questionnaire.objects.get(id=id)
 
     for question in questionnaire.questions.all():
-        answers = []
         votes = []
+        answers = []
+        i = 1
         for answer in question.answers.all():
-            answers.append(answer.text)
             votes.append(answer.votes)
+            text = chr(96 + i)
+            text = text.upper()
+            answers.append(text)
+            i = i + 1
+        answers.reverse()
+        votes.reverse()
         plot = get_plot(answers, votes)
         question.plot = plot
         question.save()

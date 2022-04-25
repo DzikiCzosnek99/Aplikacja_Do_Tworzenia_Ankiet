@@ -1,57 +1,53 @@
 {% extends 'base.html' %}
+{% load main_tags %}
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-            <h1>{{questionnaire.text}}</h1>
+        <div class="col-12 text-center">
+            <h2>{{questionnaire.text}}</h2>
         </div>
     </div>
     {% for question in questionnaire.questions.all %}
-    <div class="row" style="background-color:#ff99ff;padding:5px;border-bottom: 1px solid #000;">
+    <div class="row" style="border-bottom: 1px solid #000; margin-bottom: 10px;" >
         <div class="col-10">
-            <p>{{question.text}}</p>
+            <p class="TextCreateNew">{{forloop.counter}}. {{question.text}}</p>
         </div>
-        <div class="col-1">
-            <a href="{% url 'deleteQuestion' question.id questionnaire.id %}" class="btn btn-danger">Usuń</a>
-        </div>
-        <div class="col-1">
-            <a href="{% url 'editQuestion' question.id questionnaire.id %}" class="btn btn-primary">Edytuj</a>
+        <div class="col-2">
+            <a href="{% url 'deleteQuestion' question.id questionnaire.id %}" class="btn btn-danger">-</a>
+            <a href="{% url 'editQuestion' question.id questionnaire.id %}" class="btn btn-primary">...</a>
         </div>
     </div>
     {% for answer in question.answers.all %}
-    <div class="row" style="background-color:#80ff80;padding:5px;border-bottom: 1px solid #000;;">
+    <div class="row">
         <div class="col-10">
-            <p>&#9900; {{answer.text}}</p>
+            <p class="TextCreateNew2">{{forloop.counter|to_char}}) {{answer.text}}</p>
         </div>
-        <div class="col-1">
-            <a href="{% url 'deleteAnswer' answer.id questionnaire.id %}" class="btn btn-danger">Usuń</a>
-        </div>
-        <div class="col-1">
-            <a href="{% url 'editAnswer' answer.id questionnaire.id %}" class="btn btn-primary">Edytuj</a>
+        <div class="col-2">
+            <a href="{% url 'deleteAnswer' answer.id questionnaire.id %}" class="btn btn-danger">-</a>
+            <a href="{% url 'editAnswer' answer.id questionnaire.id %}" class="btn btn-primary">...</a>
         </div>
     </div>
     {% endfor %}
     <form method="post" action="{% url 'addAnswer' question.id questionnaire.id  %}">
-        <div class="row" style="background-color:#80ff80;padding:5px;border-bottom: 1px solid #000;">
+        <div class="row" style="margin-bottom: 10px;">
             {% csrf_token %}
             {{answerForm.text}}
             <div class="col-2">
-                <button type="submit" name="addAnswer" class="btn btn-success">Dodaj odpowiedz</button>
+                <button type="submit" name="addAnswer" class="btn btn-secondary">+</button>
             </div>
         </div>
     </form>
     {% endfor %}
 
     <form method="post" action="">
-        <div class="row" style="background-color:#ff99ff;padding:5px;">
+        <div class="row">
             {% csrf_token %}
             {{questionForm.text}}
             <div class="col-2">
-                 <button type="submit" name="addQuestion" class="btn btn-success">Dodaj pytanie</button>
+                 <button type="submit" name="addQuestion" class="btn btn-success">+</button>
             </div>
         </div>
-        <div class="row" style="background-color:#ff99ff;border-bottom: 1px solid #000;">
+        <div class="row" style="border-bottom: 1px solid #000; margin-bottom: 10px;" >
             <div class="col-6">
                 {{questionForm.multiple_choice}}
                 <label class="form-check-label" for="id_multiple_choice">Wybór wielokrotny</label>
@@ -63,6 +59,7 @@
         {% csrf_token %}
              <div class="col-4">
                  <button type="submit" name="save" class="btn btn-success">Opublikuj ankiete</button>
+                 <a href="{% url 'profile' %}" class="btn btn-primary">Tylko zapisz</a>
              </div>
         </form>
     </div>
