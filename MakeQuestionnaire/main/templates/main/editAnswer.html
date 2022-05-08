@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <div class="row" style="margin-top:10px;"></div>
-    <form action="" method="post">
-    {% csrf_token %}
-        <div class="row" style="background-color:#80ff80;padding:5px;border-bottom: 1px solid #000;">
+    <form method="post" action="">
+        <div class="row" style="margin-top: 20px;">
+            {% csrf_token %}
             {{form.text}}
             <div class="col-2">
-                <button type="submit" class="btn btn-success btn-lg">Zapisz zmiany</button>
+                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
             </div>
         </div>
     </form>

@@ -31,6 +31,7 @@ class Questionnaire(models.Model):
     publicResults = models.BooleanField(null=True, blank=True)
     password = models.CharField(max_length=200, blank=True, null=True)
     date = models.DateField(auto_created=True, null=True)
+    active = models.BooleanField(null=True, default=True)
 
     def __str__(self):
         return self.text

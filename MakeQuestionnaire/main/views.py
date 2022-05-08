@@ -24,13 +24,11 @@ def createNewQuestionnaire(request):
         if questionnaireForm.is_valid():
             text = request.POST.get('text')
             publicResults = request.POST.get('publicResults')
-            print(publicResults)
             if publicResults == 'on':
                 publicResults = True
             if publicResults is None:
                 publicResults = False
             password = request.POST.get('password')
-            print(password)
             questionnaire = Questionnaire(text=text, owner=request.user, publicResults=publicResults, password=password)
             questionnaire.save()
             return redirect(f"/questionnaireCreate/{questionnaire.id}")
@@ -38,6 +36,7 @@ def createNewQuestionnaire(request):
     return render(request, 'createNewQuestionnaire.html', context)
 
 
+@qEditAccess
 def questionnaireCreate(request, id):
     questionnaire = Questionnaire.objects.get(id=id)
     questionForm = QuestionForm()
@@ -87,14 +86,15 @@ def questionnaire_DataBase(request):
     return render(request, 'questionnaires-DataBase.html', context)
 
 
-#@qProfileAccess
+@notloged
+@qProfileAccess
 def questionnaireProfile(request, id):
     questionnaire = Questionnaire.objects.get(id=id)
-    if request.method == 'POST':
+    if request.method == 'POST' and 'access' not in request.POST:
         questions = questionnaire.questions.all()
         user = request.user
         for p in request.POST:
-            if p != 'csrfmiddlewaretoken':
+            if p != 'csrfmiddlewaretoken' and p != 'finish':
                 question = questions.get(text=str(p))
                 answers = question.answers.all()
                 answersList = request.POST.getlist(str(p))
@@ -108,11 +108,12 @@ def questionnaireProfile(request, id):
                     userResponse.save()
             else:
                 pass
-        return redirect('/home')
+        return redirect(f"/questionnaire_Results/{id}")
     context = {'questionnaire': questionnaire}
     return render(request, 'questionnaireProfile.html', context)
 
 
+@qqaEditAccess
 def deleteQuestion(request, question_id, questionnaire_id):
     question = Question.objects.get(id=question_id)
     for answer in question.answers.all():
@@ -121,12 +122,14 @@ def deleteQuestion(request, question_id, questionnaire_id):
     return redirect(f"/questionnaireCreate/{questionnaire_id}")
 
 
+@qqaEditAccess
 def deleteAnswer(request, answer_id, questionnaire_id):
     answer = Answer.objects.get(id=answer_id)
     answer.delete()
     return redirect(f"/questionnaireCreate/{questionnaire_id}")
 
 
+@qqaEditAccess
 def editQuestion(request, question_id, questionnaire_id):
     question = Question.objects.get(id=question_id)
     form = QuestionForm(instance=question)
@@ -139,6 +142,7 @@ def editQuestion(request, question_id, questionnaire_id):
     return render(request, 'editQuestion.html', context)
 
 
+@qqaEditAccess
 def editAnswer(request, answer_id, questionnaire_id):
     answer = Answer.objects.get(id=answer_id)
     form = AnswerForm(instance=answer)
@@ -176,31 +180,31 @@ def loginPage(request):
 
 @loged
 def register(request):
-    form = UserCreationForm()
+    form = UserRegisterForm()
     message = ''
     if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
         username = request.POST.get('username')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
         if User.objects.filter(username=username).exists():
             message = 'Podana nazwa użytkownika jest zajęta.'
         elif len(username) < 5:
-            message = 'Nazwa użytkownika musi składać się z przynajmniej 6 znaków. '
+            message = 'Nazwa użytkownika musi składać się z przynajmniej 5 znaków. '
         elif password1 != password2:
             message = 'Nie poprawnie przepisano hasło.'
         elif len(password1) < 8:
             message = ' Hasło musi zawierać przynajmniej 8 znaków.'
         else:
-            user = User(username=username, password=password1)
-            user.save()
+            user = form.save()
             return redirect('/login')
     context = {'form': form, 'message': message}
     return render(request, 'register.html', context)
 
 
+@qResultsAccess
 def questionnaireResults(request, id):
     questionnaire = Questionnaire.objects.get(id=id)
-
     for question in questionnaire.questions.all():
         votes = []
         answers = []
@@ -230,3 +234,13 @@ def profile(request):
         userQuestionnaires = Questionnaire.objects.filter(owner=request.user)
         context = {"userQuestionnaires": userQuestionnaires}
     return render(request, "profile.html", context)
+
+
+def questionnaireAccess(request, id):
+    message = ''
+    context = {'message': message, 'id': id}
+    return render(request, 'questionnaireAccess.html', context)
+
+
+def questionnaireAccessInfo(request):
+    return render(request, 'questionnaireAccessInfo')

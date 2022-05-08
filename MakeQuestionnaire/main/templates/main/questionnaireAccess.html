@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <form method="post" action="{% url 'questionnaireProfile' id %}">
+        {% csrf_token %}
+        <div class="row" style="margin-top: 40px;">
+            <div class="col-3"></div>
+            <label class="col-2 " style="margin-top:20px;"  for="id_password">Hasło:</label>
+            <input type="password" name="password" id="id_password" class="col-4 " style="margin-top:20px;" required>
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-8"></div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary" name="access">Zatwierdz</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 text-center">
+                <p class="logerr">{{message}}</p>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

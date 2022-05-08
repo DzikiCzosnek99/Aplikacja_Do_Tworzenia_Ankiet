@@ -18,4 +18,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('questionnaire_Results/<str:id>', views.questionnaireResults, name='questionnaireResults'),
     path('profile/', views.profile, name='profile'),
+    path('questionnaireAccess/<str:id>', views.questionnaireAccess, name='questionnaireAccess'),
+    path('questionnaireAccessInfo', views.questionnaireAccessInfo, name='questionnaireAccessInfo'),
     ]
