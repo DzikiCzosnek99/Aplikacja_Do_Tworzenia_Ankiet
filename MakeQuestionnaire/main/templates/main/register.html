@@ -3,29 +3,28 @@
 <div class="container">
         <form method="post" action="">
         {% csrf_token %}
-            <div class="mb-3 row">
-                <div class="col-4"></div>
-                <label for="id_username" class="col-sm-2 col-form-label" style="margin-top:20px;">Nazwa użytkownika</label>
-                <div class="col-sm-2 col-form-label" style="margin-top:20px;">{{form.username}}</div>
+            <div class="mb-3 row" style="margin-top:20px;">
+                <div class="col-xl-3 col-md-2"></div>
+                <label for="id_username" class="col-xl-3 col-md-4 col-form-label">Nazwa użytkownika</label>
+                <input class="col-xl-3 col-md-4 col-form-label" id="id_username" name="username">
             </div>
             <div class="mb-3 row">
-                <div class="col-4"></div>
-                <label for="id_password1" class="col-sm-2 col-form-label" >Hasło</label>
-                <div class="col-sm-2 col-form-label" >{{form.password1}}</div>
+                <div class="col-xl-3 col-md-2"></div>
+                <label for="id_password1" class="col-xl-3 col-md-4 col-form-label" >Hasło</label>
+                <input class="col-xl-3 col-md-4 col-form-label" id="id_password1" name="password1" type="password">
             </div>
             <div class="mb-3 row">
-                <div class="col-4"></div>
-                <label for="id_password2" class="col-sm-2 col-form-label" >Powtórz hasło</label>
-                <div class="col-sm-2 col-form-label" >{{form.password2}}</div>
+                <div class="col-xl-3 col-md-2"></div>
+                <label for="id_password2" class="col-xl-3 col-md-4 col-form-label" >Powtórz hasło</label>
+                <input class="col-xl-3 col-md-4 col-form-label" id="id_password2" name="password2" type="password">
             </div>
             <div class="row">
-                <div class="col-4"></div>
-                <div class="col-2 text-center"><button class="btn btn-primary" type="submit">Zarejestuj</button></div>
-                <div class="col-2 text-center"><a href="{% url 'login' %}" class="btn btn-primary">Zaloguj</a></div>
+                <div class="col-md-4 col-3"></div>
+                <div class="col-md-2 col-3 text-center"><button class="btn btn-primary" type="submit">Zarejestuj</button></div>
+                <div class="col-md-2 col-3 text-center"><a href="{% url 'login' %}" class="btn btn-primary">Zaloguj</a></div>
             </div>
             <div class="row">
-                <div class="col-4"></div>
-                <div class="col-4 text-center" style="margin-top:20px;"><p class="logerr">{{message}}</p></div>
+                <div class="col-12 text-center" style="margin-top:20px;"><p class="logerr">{{message}}</p></div>
             </div>
         </form>
 </div>

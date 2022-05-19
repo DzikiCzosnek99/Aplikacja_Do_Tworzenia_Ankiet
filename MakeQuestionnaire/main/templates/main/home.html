@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col text-center">
-            <div style="width: 45%; margin: auto;">
-                <a href="{% url 'createNewQuestionnaire' %} " class="homelink">
-                    <div class="homediv"><h1>Dodaj nową ankiete</h1></div>
-                </a>
-            </div>
+    <div class="row" style="margin-top:15px;">
+        <div class="col-12 text-center">
+            <h1>Aplikacja do tworzenia ankiet</h1>
         </div>
     </div>
-        <div class="row">
-            <div style="width: 45%; margin: auto;">
-                <div class="col text-center" >
-                    <a href="{% url 'profile' %}" class="homelink">
-                        <div class="homediv"><h1>Profil</h1></div>
-                    </a>
-                </div>
-            </div>
+    <div class="row" style="margin-top:15px;">
+        <div class="col-12 text-center">
+            <p style="font-size:20px;font-weight:500;">Questionnaire App to aplikacja do tworzenia ankiet internetowych. Każdy zalogowany użytkownik może utworzyć
+            własną ankiete i ją upublicznić. Strona umożliwia zabezpieczenie dostępu do ankiety poprzez nieobowiązkowe hasło, oraz
+            zarządzanie dostępnością wyników ankiety. Rezultaty przedstawione są w formie wykresów słupkowych utworzonych przy pomocy biblioteki
+            matplotlib. Każdy użytkownik ma dostęp do bazy danych ankiet przez siebie utworzonych oraz tych, w których brał udział.</p>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <a href="{% url 'createNewQuestionnaire' %}" class="btn btn-success btn-lg">Dodaj nową ankiete</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

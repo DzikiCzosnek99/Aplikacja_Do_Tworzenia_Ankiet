@@ -20,4 +20,10 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('questionnaireAccess/<str:id>', views.questionnaireAccess, name='questionnaireAccess'),
     path('questionnaireAccessInfo', views.questionnaireAccessInfo, name='questionnaireAccessInfo'),
+    path('profile/myQuestionnaires', views.myQuestionnaires, name='myQuestionnaires'),
+    path('disableQuestionnaire/<str:id>', views.disableQuestionnaire, name='disableQuestionnaire'),
+    path('deleteQuestionnaire/<str:id>', views.deleteQuestionnaire, name='deleteQuestionnaire'),
+    path('profile/questionnaireDone', views.questionnaireDone, name='questionnaireDone'),
+    path('profile/notPublicQuestionnaire', views.notPublicQuestionnaire, name='notPublicQuestionnaire'),
+    path('editQuestionnaire/<str:id>', views.editQuestionnaire, name='editQuestionnaire'),
     ]

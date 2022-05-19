@@ -8,8 +8,7 @@
                 <div class="col-2">
                     <button type="submit" class="btn btn-secondary">Szukaj</button>
                 </div>
-                <div class="col-4"></div>
-                <div class="col-2 text-right">
+                <div class="col-6  text-end">
                     <a href="{% url 'createNewQuestionnaire' %}" class="btn btn-success">Dodaj nową ankiete</a>
                 </div>
         </div>
@@ -17,15 +16,14 @@
         <div class="row" style="border-bottom: 1px solid #000; margin-top: 10px;"></div>
     </form>
     <div class="row">
-        <div class="col-6"><p class="atr1">Nazwa</p></div>
+        <div class="col-lg-6 col-10"><p class="atr1">Nazwa</p></div>
         <div class="col-2"><p class="atr1">Hasło</p></div>
-        <div class="col-2"><p class="atr1">Twórca</p></div>
-        <div class="col-2"><p class="atr1">Data</p></div>
+        <div class="col-2 d-none d-lg-block"><p class="atr1">Twórca</p></div>
+        <div class="col-2 d-none d-lg-block"><p class="atr1">Data</p></div>
     </div>
     {% for questionnaire in questionnaires %}
-        {% if questionnaire.public == True %}
-            <div class="row">
-                <div class="col-6"><a class="Qprofile" href="{% url 'questionnaireProfile' questionnaire.id %}" >{{questionnaire.text}}</a></div>
+    <div class="row">
+                <div class="col-lg-6 col-10 text-truncate"><a class="Qprofile" href="{% url 'questionnaireProfile' questionnaire.id %}" >{{questionnaire.text}}</a></div>
                 <div class="col-2">
                     {% if questionnaire.password != "" %}
                         <p>Tak</p>
@@ -33,10 +31,9 @@
                         <p>Nie</p>
                     {% endif %}
                 </div>
-                <div class="col-2"><p>{{questionnaire.owner}}</p></div>
-                <div class="col-2"><p>{{questionnaire.date}}</p></div>
+                <div class="col-2 d-none d-lg-block"><p>{{questionnaire.owner}}</p></div>
+                <div class="col-2 d-none d-lg-block"><p>{{questionnaire.date}}</p></div>
             </div>
-        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

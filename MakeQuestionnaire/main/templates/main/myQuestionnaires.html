@@ -1,8 +1,62 @@
-{% extends 'base.html' %}
-{% block content %}
-    <ul>
-        {% for questionnaire in questionnaires %}
-            <li>{{questionnaire.text}}</li>
-        {% endfor %}
-    </ul>
+{% extends 'profile.html' %}
+{% block data %}
+<form method="get" action="">
+        <div class="row" style="margin-top: 15px;">
+            {% csrf_token %}
+            {{Myfilter.form.text}}
+            <div class="col-1 text-center">
+                <p class="atr1">Status:</p>
+            </div>
+            <div class="col-2">
+                {{Myfilter.form.active}}
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-secondary">Szukaj</button>
+            </div>
+        </div>
+        <div class="row" style="border-bottom: 1px solid #000; margin-top: 10px;"></div>
+</form>
+<div class="row">
+        <div class="col-4"><p class="atr1">Nazwa</p></div>
+        <div class="col-1"><p class="atr1">Status</p></div>
+    </div>
+    {% for questionnaire in questionnaires %}
+        {% if questionnaire.public == True %}
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-4"><a class="Qprofile" href="{% url 'questionnaireResults' questionnaire.id %}" >{{questionnaire.text}}</a></div>
+                    {% if questionnaire.active == True %}
+                        <div class="col-2"><p>Aktywna</p></div>
+                        <div class="col-2"><button class="btn btn-info">Kupiuj link</button></div>
+                        <div class="col-2">
+                            <form method="post" action="{% url 'disableQuestionnaire' questionnaire.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary" name="inactive">Zakończ ankiete</button>
+                            </form>
+                        </div>
+                        <div class="col-2">
+                            <form method="post" action="{% url 'deleteQuestionnaire' questionnaire.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Usuń ankiete</button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div class="col-2"><p>Nieaktywna</p></div>
+                        <div class="col-2"></div>
+                        <div class="col-2">
+                            <form method="post" action="{% url 'disableQuestionnaire' questionnaire.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary" name="active">Wznów ankiete</button>
+                            </form>
+                        </div>
+                        <div class="col-2">
+                            <form method="post" action="{% url 'deleteQuestionnaire' questionnaire.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Usuń ankiete</button>
+                            </form>
+                        </div>
+                    {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}

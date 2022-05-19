@@ -38,19 +38,6 @@ def qEditAccess(viewFunc):
     return wrapper_func
 
 
-def qqaEditAccess(viewFunc):
-    def wrapper_func(response, id, id_2, *args, **kwargs):
-        questionnaire = Questionnaire.objects.get(id=id_2)
-        user = response.user
-        if questionnaire.owner != user:
-            return redirect('/home')
-        elif not questionnaire.active or questionnaire.public:
-            return redirect('/profile')
-        else:
-            return viewFunc(response, id, id_2, *args, **kwargs)
-    return wrapper_func
-
-
 def qResultsAccess(viewFunc):
     def wrapper_func(response, id, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=id)

@@ -10,7 +10,8 @@ class QuestionnaireForm(forms.ModelForm):
         fields = ['text', 'password', 'publicResults']
         widgets = {
             'text': forms.TextInput(attrs={'class': 'col-xl-6 col-md-12 col-form-label', 'style': 'margin-top: 20px;'}),
-            'password': forms.PasswordInput(attrs={'class': 'col-xl-6 col-md-12 col-form-label', 'style': 'margin-top: 20px;'}),
+            'password': forms.PasswordInput(
+                attrs={'class': 'col-xl-6 col-md-12 col-form-label', 'style': 'margin-top: 20px;'}),
             'publicResults': forms.CheckboxInput(attrs={'class': 'form-check-input'})
         }
 
@@ -22,9 +23,9 @@ class QuestionForm(forms.ModelForm):
         widgets = {
             'text': forms.TextInput(attrs={
                 'class': 'col-10 col-form-label', 'placeholder': 'Dodaj nowe pytanie',
-                }),
+            }),
             'multiple_choice': forms.CheckboxInput(attrs={'class': 'form-check-input'})
-            }
+        }
 
 
 class AnswerForm(forms.ModelForm):
@@ -34,10 +35,5 @@ class AnswerForm(forms.ModelForm):
         widgets = {
             'text': forms.TextInput(attrs={'class': 'col-10 col-form-label', 'placeholder': 'Dodaj odpowiedz'
                                            })
-            }
+        }
 
-
-class UserRegisterForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password1', 'password2']

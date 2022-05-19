@@ -79,7 +79,7 @@ def addAnswer(request, question_id, questionnaire_id):
 
 
 def questionnaire_DataBase(request):
-    questionnaires = Questionnaire.objects.all()
+    questionnaires = Questionnaire.objects.filter(public=True, active=True)
     Myfilter = QuestionnairesFilter(request.GET, queryset=questionnaires)
     questionnaires = Myfilter.qs
     context = {'questionnaires': questionnaires, 'Myfilter': Myfilter}
@@ -93,6 +93,9 @@ def questionnaireProfile(request, id):
     if request.method == 'POST' and 'access' not in request.POST:
         questions = questionnaire.questions.all()
         user = request.user
+        questionnairesDone = QuestionnairesDone.objects.get(user=user)
+        questionnairesDone.questionnaires.add(questionnaire)
+        questionnairesDone.save()
         for p in request.POST:
             if p != 'csrfmiddlewaretoken' and p != 'finish':
                 question = questions.get(text=str(p))
@@ -113,8 +116,9 @@ def questionnaireProfile(request, id):
     return render(request, 'questionnaireProfile.html', context)
 
 
-@qqaEditAccess
 def deleteQuestion(request, question_id, questionnaire_id):
+    if request.method != 'POST':
+        return redirect('/home')
     question = Question.objects.get(id=question_id)
     for answer in question.answers.all():
         answer.delete()
@@ -122,18 +126,20 @@ def deleteQuestion(request, question_id, questionnaire_id):
     return redirect(f"/questionnaireCreate/{questionnaire_id}")
 
 
-@qqaEditAccess
 def deleteAnswer(request, answer_id, questionnaire_id):
+    if request.method != 'POST':
+        return redirect('/home')
     answer = Answer.objects.get(id=answer_id)
     answer.delete()
     return redirect(f"/questionnaireCreate/{questionnaire_id}")
 
 
-@qqaEditAccess
 def editQuestion(request, question_id, questionnaire_id):
+    if request.method != 'POST':
+        return redirect('/profile')
     question = Question.objects.get(id=question_id)
     form = QuestionForm(instance=question)
-    if request.method == 'POST':
+    if 'edit' not in request.POST:
         form = QuestionForm(request.POST, instance=question)
         if form.is_valid():
             form.save()
@@ -142,11 +148,12 @@ def editQuestion(request, question_id, questionnaire_id):
     return render(request, 'editQuestion.html', context)
 
 
-@qqaEditAccess
 def editAnswer(request, answer_id, questionnaire_id):
+    if request.method != 'POST':
+        return redirect('/profile')
     answer = Answer.objects.get(id=answer_id)
     form = AnswerForm(instance=answer)
-    if request.method == 'POST':
+    if 'edit' not in request.POST:
         form = AnswerForm(request.POST, instance=answer)
         if form.is_valid():
             form.save()
@@ -173,17 +180,15 @@ def loginPage(request):
             message = 'Dane logowania są niepoprawne'
         else:
             login(request, user)
-            return redirect('/home')
+            return redirect('/profile')
     context = {'message': message}
     return render(request, 'login.html', context)
 
 
 @loged
 def register(request):
-    form = UserRegisterForm()
     message = ''
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
         username = request.POST.get('username')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
@@ -196,9 +201,12 @@ def register(request):
         elif len(password1) < 8:
             message = ' Hasło musi zawierać przynajmniej 8 znaków.'
         else:
-            user = form.save()
+            user = User.objects.create_user(username=username, password=password1)
+            user.save()
+            questionnairesDone = QuestionnairesDone.objects
+            questionnairesDone.create(user=user)
             return redirect('/login')
-    context = {'form': form, 'message': message}
+    context = {'message': message}
     return render(request, 'register.html', context)
 
 
@@ -230,10 +238,7 @@ def profile(request):
     if request.method == "POST":
         logout(request)
         return redirect('/home')
-    else:
-        userQuestionnaires = Questionnaire.objects.filter(owner=request.user)
-        context = {"userQuestionnaires": userQuestionnaires}
-    return render(request, "profile.html", context)
+    return redirect('/profile/myQuestionnaires')
 
 
 def questionnaireAccess(request, id):
@@ -243,4 +248,69 @@ def questionnaireAccess(request, id):
 
 
 def questionnaireAccessInfo(request):
-    return render(request, 'questionnaireAccessInfo')
+    return render(request, 'questionnaireAccessInfo.html')
+
+
+def myQuestionnaires(request):
+    questionnaires = Questionnaire.objects.filter(owner=request.user, public=True)
+    Myfilter = QuestionnairesFilter(request.GET, queryset=questionnaires)
+    questionnaires = Myfilter.qs
+    context = {'questionnaires': questionnaires, 'Myfilter': Myfilter}
+    return render(request, 'myQuestionnaires.html', context)
+
+
+def disableQuestionnaire(request, id):
+    if request.method != 'POST':
+        return redirect('/home')
+    else:
+        questionnaire = Questionnaire.objects.get(id=id)
+        if 'active' in request.POST:
+            questionnaire.active = True
+            questionnaire.save()
+        else:
+            questionnaire.active = False
+            questionnaire.save()
+        return redirect('/profile')
+
+
+def deleteQuestionnaire(request, id):
+    if request.method != 'POST':
+        return redirect('/home')
+    else:
+        questionnaire = Questionnaire.objects.get(id=id)
+        questionnaire.delete()
+        return redirect('/profile')
+
+
+def questionnaireDone(request):
+    questionnaires = QuestionnairesDone.objects.get(user=request.user).questionnaires.all()
+    Myfilter = QuestionnairesFilter(request.GET, queryset=questionnaires)
+    questionnaires = Myfilter.qs
+    context = {'questionnaires': questionnaires, 'Myfilter': Myfilter}
+    return render(request, 'questionnaireDone.html', context)
+
+
+def notPublicQuestionnaire(request):
+    if request.method == 'POST' and 'public' in request.POST:
+        id = request.POST.get('public')
+        questionnaire = Questionnaire.objects.get(id=id)
+        questionnaire.public = True
+        questionnaire.save()
+    questionnaires = Questionnaire.objects.filter(owner=request.user, public=False)
+    Myfilter = QuestionnairesFilter(request.GET, queryset=questionnaires)
+    questionnaires = Myfilter.qs
+    context = {'questionnaires': questionnaires, 'Myfilter': Myfilter}
+    return render(request, 'notPublicQuestionnaire.html', context)
+
+
+def editQuestionnaire(request, id):
+    questionnaire = Questionnaire.objects.get(id=id)
+    form = QuestionnaireForm(instance=questionnaire)
+    if request.method == 'POST':
+        form = QuestionnaireForm(request.POST, instance=questionnaire)
+        if form.is_valid():
+            form.save()
+            return redirect('/profile/notPublicQuestionnaire')
+    context = {'form': form}
+
+    return render(request, 'editQuestionnaire.html', context)

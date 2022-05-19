@@ -1,0 +1,26 @@
+{% extends 'profile.html' %}
+{% block data %}
+<form method="get" action="">
+        <div class="row" style="margin-top: 15px;">
+            {% csrf_token %}
+            {{Myfilter.form.text}}
+            <div class="col-2">
+                <button type="submit" class="btn btn-secondary">Szukaj</button>
+            </div>
+        </div>
+        <div class="row" style="border-bottom: 1px solid #000; margin-top: 10px;"></div>
+</form>
+<div class="row">
+        <div class="col-4"><p class="atr1">Nazwa</p></div>
+    </div>
+    {% for questionnaire in questionnaires %}
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="col-4"><a class="Qprofile" href="{% url 'questionnaireResults' questionnaire.id %}" >{{questionnaire.text}}</a></div>
+            <div class="col-6"></div>
+            <div class="col-2">
+                <a href="{% url 'questionnaireResults' questionnaire.id %}" class="btn btn-secondary">Zobacz wyniki</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
