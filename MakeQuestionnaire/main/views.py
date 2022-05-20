@@ -278,6 +278,10 @@ def deleteQuestionnaire(request, id):
         return redirect('/home')
     else:
         questionnaire = Questionnaire.objects.get(id=id)
+        for question in questionnaire.questions.all():
+            for answer in question.answers.all():
+                answer.delete()
+            question.delete()
         questionnaire.delete()
         return redirect('/profile')
 

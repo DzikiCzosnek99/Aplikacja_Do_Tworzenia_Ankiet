@@ -3,7 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    {% block title %}
+        <title>Title</title>
+    {% endblock %}
     <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}">
 </head>

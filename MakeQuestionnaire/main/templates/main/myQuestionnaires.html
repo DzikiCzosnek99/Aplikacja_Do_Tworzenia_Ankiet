@@ -4,10 +4,10 @@
         <div class="row" style="margin-top: 15px;">
             {% csrf_token %}
             {{Myfilter.form.text}}
-            <div class="col-1 text-center">
+            <div class="col-lg-1 col-2 text-center">
                 <p class="atr1">Status:</p>
             </div>
-            <div class="col-2">
+            <div class="col-lg-2 col-4">
                 {{Myfilter.form.active}}
             </div>
             <div class="col-2">
@@ -17,41 +17,41 @@
         <div class="row" style="border-bottom: 1px solid #000; margin-top: 10px;"></div>
 </form>
 <div class="row">
-        <div class="col-4"><p class="atr1">Nazwa</p></div>
-        <div class="col-1"><p class="atr1">Status</p></div>
+        <div class="col-5"><p class="atr1">Nazwa</p></div>
+        <div class="col-1 d-none d-xl-block"><p class="atr1">Status</p></div>
     </div>
     {% for questionnaire in questionnaires %}
         {% if questionnaire.public == True %}
-            <div class="row" style="margin-bottom: 15px;">
-                <div class="col-4"><a class="Qprofile" href="{% url 'questionnaireResults' questionnaire.id %}" >{{questionnaire.text}}</a></div>
+            <div class="row" style="background-color:white;padding:5px;border-bottom:4px solid #D3D3D3">
+                <div class="col-xl-5 col-12"><a class="Qprofile" href="{% url 'questionnaireResults' questionnaire.id %}" >{{questionnaire.text}}</a></div>
                     {% if questionnaire.active == True %}
-                        <div class="col-2"><p>Aktywna</p></div>
-                        <div class="col-2"><button class="btn btn-info">Kupiuj link</button></div>
-                        <div class="col-2">
+                        <div class="col-1 d-none d-xl-block"><p>Aktywna</p></div>
+                        <div class="col-xl-2 col-3 text-end" style="margin-top:10px;"><button class="btn btn-info  btn-sm">Kupiuj link</button></div>
+                        <div class="col-xl-2 col-4 text-end">
                             <form method="post" action="{% url 'disableQuestionnaire' questionnaire.id %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-secondary" name="inactive">Zakończ ankiete</button>
+                                <button type="submit" class="btn btn-secondary btn-sm" style="margin-top:10px;" name="inactive">Zakończ ankiete</button>
                             </form>
                         </div>
-                        <div class="col-2">
+                        <div class="col-xl-2 col-4 text-end">
                             <form method="post" action="{% url 'deleteQuestionnaire' questionnaire.id %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Usuń ankiete</button>
+                                <button type="submit" class="btn btn-danger  btn-sm" style="margin-top:10px;">Usuń ankiete</button>
                             </form>
                         </div>
                     {% else %}
-                        <div class="col-2"><p>Nieaktywna</p></div>
-                        <div class="col-2"></div>
-                        <div class="col-2">
+                        <div class="col-1 d-none d-xl-block"><p>Nieaktywna</p></div>
+                        <div class="col-xl-2 col-3 text-end"></div>
+                        <div class="col-xl-2 col-4 text-end">
                             <form method="post" action="{% url 'disableQuestionnaire' questionnaire.id %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-secondary" name="active">Wznów ankiete</button>
+                                <button type="submit" class="btn btn-secondary btn-sm" name="active" style="margin-top:10px;">Wznów ankiete</button>
                             </form>
                         </div>
-                        <div class="col-2">
+                        <div class="col-xl-2 col-4 text-end">
                             <form method="post" action="{% url 'deleteQuestionnaire' questionnaire.id %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Usuń ankiete</button>
+                                <button type="submit" class="btn btn-danger btn-sm" style="margin-top:10px;">Usuń ankiete</button>
                             </form>
                         </div>
                     {% endif %}
@@ -59,4 +59,7 @@
         {% endif %}
     {% endfor %}
 </div>
+{% endblock %}
+{% block title %}
+        <title>Moje ankiety</title>
 {% endblock %}

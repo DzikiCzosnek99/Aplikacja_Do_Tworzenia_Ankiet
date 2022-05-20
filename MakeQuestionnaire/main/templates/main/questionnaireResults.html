@@ -20,9 +20,12 @@
         {% endfor %}
         <div class="row">
             <div class="col-12">
-                <img src="data:image/png;base64, {{question.plot|safe}}">
+                <img class="img-fluid" src="data:image/png;base64, {{question.plot|safe}}">
             </div>
         </div>
     {% endfor %}
 </div>
+{% endblock %}
+{% block title %}
+        <title>Wyniki ankiety</title>
 {% endblock %}

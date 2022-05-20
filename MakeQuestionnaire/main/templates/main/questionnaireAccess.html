@@ -4,22 +4,23 @@
     <form method="post" action="{% url 'questionnaireProfile' id %}">
         {% csrf_token %}
         <div class="row" style="margin-top: 40px;">
-            <div class="col-3"></div>
-            <label class="col-2 " style="margin-top:20px;"  for="id_password">Hasło:</label>
-            <input type="password" name="password" id="id_password" class="col-4 " style="margin-top:20px;" required>
+            <label class="col-lg-4 col-2 col-form-label text-end" style="margin-top:20px;"  for="id_password">Hasło:</label>
+            <input type="password" name="password" id="id_password" class="col-lg-4 col-8 col-form-label" style="margin-top:20px;" required>
         </div>
         <div class="row" style="margin-top:20px;">
-            <div class="col-8"></div>
-            <div class="col-2">
+            <div class="col-8 text-end">
                 <button type="submit" class="btn btn-primary" name="access">Zatwierdz</button>
             </div>
         </div>
         <div class="row">
-            <div class="col-3"></div>
-            <div class="col-6 text-center">
+
+            <div class="col-12 text-center">
                 <p class="logerr">{{message}}</p>
             </div>
         </div>
     </form>
 </div>
+{% endblock %}
+{% block title %}
+        <title>Sprawdzanie dostępu</title>
 {% endblock %}

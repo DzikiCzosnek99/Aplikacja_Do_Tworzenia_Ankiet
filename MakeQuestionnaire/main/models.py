@@ -30,7 +30,7 @@ class Questionnaire(models.Model):
     public = models.BooleanField(null=True, default=False)
     publicResults = models.BooleanField(null=True, blank=True)
     password = models.CharField(max_length=200, blank=True, null=True)
-    date = models.DateField(auto_created=True, null=True)
+    date = models.DateField(auto_now_add=True, null=True)
     active = models.BooleanField(null=True, default=True)
 
     def __str__(self):

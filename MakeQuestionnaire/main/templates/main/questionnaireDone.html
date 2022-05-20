@@ -14,13 +14,15 @@
         <div class="col-4"><p class="atr1">Nazwa</p></div>
     </div>
     {% for questionnaire in questionnaires %}
-        <div class="row" style="margin-bottom: 15px;">
-            <div class="col-4"><a class="Qprofile" href="{% url 'questionnaireResults' questionnaire.id %}" >{{questionnaire.text}}</a></div>
-            <div class="col-6"></div>
-            <div class="col-2">
-                <a href="{% url 'questionnaireResults' questionnaire.id %}" class="btn btn-secondary">Zobacz wyniki</a>
+        <div class="row" style="background-color:white;padding:5px;border-bottom:4px solid #D3D3D3">
+            <div class="col-xl-10 col-lg-9 col-8"><a class="Qprofile" href="{% url 'questionnaireResults' questionnaire.id %}" >{{questionnaire.text}}</a></div>
+            <div class="col-xl-2 col-lg-3 col-4 text-end">
+                <a href="{% url 'questionnaireResults' questionnaire.id %}" class="btn btn-secondary btn-sm">Zobacz wyniki</a>
             </div>
         </div>
     {% endfor %}
 </div>
+{% endblock %}
+{% block title %}
+        <title>Wypełnione ankiety</title>
 {% endblock %}

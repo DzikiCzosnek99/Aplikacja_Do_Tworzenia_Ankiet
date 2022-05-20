@@ -22,7 +22,7 @@
         <div class="col-2 d-none d-lg-block"><p class="atr1">Data</p></div>
     </div>
     {% for questionnaire in questionnaires %}
-    <div class="row">
+    <div class="row" style="background-color:white;padding:5px;border-bottom:4px solid #D3D3D3">
                 <div class="col-lg-6 col-10 text-truncate"><a class="Qprofile" href="{% url 'questionnaireProfile' questionnaire.id %}" >{{questionnaire.text}}</a></div>
                 <div class="col-2">
                     {% if questionnaire.password != "" %}
@@ -36,4 +36,7 @@
             </div>
     {% endfor %}
 </div>
+{% endblock %}
+{% block title %}
+        <title>Baza ankiet</title>
 {% endblock %}
