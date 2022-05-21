@@ -26,7 +26,9 @@
                 <div class="col-xl-5 col-12"><a class="Qprofile" href="{% url 'questionnaireResults' questionnaire.id %}" >{{questionnaire.text}}</a></div>
                     {% if questionnaire.active == True %}
                         <div class="col-1 d-none d-xl-block"><p>Aktywna</p></div>
-                        <div class="col-xl-2 col-3 text-end" style="margin-top:10px;"><button class="btn btn-info  btn-sm">Kupiuj link</button></div>
+                        <div class="col-xl-2 col-3 text-end" style="margin-top:10px;">
+                            <button class="btn btn-info  btn-sm" data-hex="{% url 'questionnaireProfile' questionnaire.id %}">Kupiuj link</button>
+                        </div>
                         <div class="col-xl-2 col-4 text-end">
                             <form method="post" action="{% url 'disableQuestionnaire' questionnaire.id %}">
                                 {% csrf_token %}
@@ -59,6 +61,24 @@
         {% endif %}
     {% endfor %}
 </div>
+<script>
+        console.log('cycki');
+        const copyBtns = [...document.getElementsByClassName("btn btn-info  btn-sm")]
+        console.log(copyBtns);
+        let previous = null
+
+        copyBtns.forEach(btn => btn.addEventListener('click', () => {
+            console.log('click')
+            const link = btn.getAttribute('data-hex')
+            console.log(link)
+            navigator.clipboard.writeText(link)
+            btn.textContent = 'Skopiowano'
+            if (previous) {
+                previous.textContent = 'Kupiuj link'
+                }
+            previous = btn
+        }))
+</script>
 {% endblock %}
 {% block title %}
         <title>Moje ankiety</title>

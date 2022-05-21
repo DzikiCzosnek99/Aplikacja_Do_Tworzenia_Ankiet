@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-zj849)pkg=5)693zq#=kjk7&k4t6gwug$#w9l4+b^-_(07dtsf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['questionnaireapp-dul.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'MakeQuestionnaire.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'myDATABASE',
+        'USER': 'postgres',
+        'PASSWORD': '158112882v4K57',
+        'HOST': 'database-3.cwd0sev8k1cc.us-east-1.rds.amazonaws.com',
+        'PORT': '54324',
     }
 }
 

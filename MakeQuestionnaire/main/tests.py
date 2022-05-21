@@ -2,6 +2,7 @@ from django.test import TestCase
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 # Create your tests here.
 class Ans():
     def __init__(self, text, votes):
@@ -35,8 +36,8 @@ ax.set_xlabel('Głosy')
 ax.set_title('Wyniki ankiety')
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
-#ax.spines['bottom'].set_visible(False)
+# ax.spines['bottom'].set_visible(False)
 ax.spines['left'].set_visible(False)
-#ax.xaxis.set_visible(False)
-#ax.yaxis.set_visible(False)
+# ax.xaxis.set_visible(False)
+# ax.yaxis.set_visible(False)
 plt.show()
