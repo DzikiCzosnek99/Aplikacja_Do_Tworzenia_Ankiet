@@ -7,7 +7,6 @@ from .utils import get_plot
 from .filters import *
 
 
-# Create your views here.
 def index(request):
     return redirect('home/')
 
