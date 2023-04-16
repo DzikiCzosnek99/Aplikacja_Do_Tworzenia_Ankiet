@@ -8,4 +8,4 @@ Baza danych lokalna. Użyty framework - django + biblioteka css - bootstrap.
 
 <img src="https://github.com/DzikiCzosnek99/Online-Application-For-Creating-Polls/blob/main/wyniki.png?raw=true" alt="alt text" width="1100"/>
 
-<img src="https://github.com/DzikiCzosnek99/Online-Application-For-Creating-Polls/blob/main/nowa_nkieta.png?raw=true" alt="alt text" width="1100"/>
+<img src="https://github.com/DzikiCzosnek99/Online-Application-For-Creating-Polls/blob/main/nowa_ankieta.png?raw=true" alt="alt text" width="1100"/>
